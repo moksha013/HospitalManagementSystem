@@ -6,8 +6,8 @@ import com.hospital.util.DatabaseConnection;
 import javax.swing.*;
 
 /**
- * Entry point for Hospital Management System.
- * Connects the UI to the service/database architecture.
+ * Entry point for MediTrack.
+ * Author: Moksha
  */
 public class Main {
 
@@ -20,8 +20,8 @@ public class Main {
         }
 
         System.out.println("=================================================");
-        System.out.println("Starting Hospital Management System");
-        System.out.println("Team: Moksha (Frontend/UI) & Poojitha (Database)");
+        System.out.println("Starting MediTrack");
+        System.out.println("Author: Moksha");
         System.out.println("=================================================");
 
         // Test database connection at startup

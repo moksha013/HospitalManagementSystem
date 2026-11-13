@@ -12,15 +12,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
- * Main Java Swing Dashboard Frame.
- * Designed and implemented by Moksha (Frontend / UI Owner).
- * Demonstrates:
- * - Clean, accessible navigation and layout
- * - Explicit contrast and hover feedback for buttons
- * - Live MySQL connection monitoring and informative disconnected state
- * - Compact, dynamically connected metric cards
- * - Fully wrapped, non-scrolling Academic Viva concept mapping
- * - Separation of concerns (Delegates to Services and child Panels)
+ * Main Java Swing Dashboard Frame for MediTrack.
+ * Author: Moksha
  */
 public class MainDashboard extends JFrame {
 
@@ -56,7 +49,7 @@ public class MainDashboard extends JFrame {
     private JLabel lblSubBills;
 
     public MainDashboard() {
-        super("Hospital Management System | OOPS Java + DBMS");
+        super("MediTrack");
 
         this.patientService = new PatientService();
         this.doctorService = new DoctorService();
@@ -77,7 +70,7 @@ public class MainDashboard extends JFrame {
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(UITheme.BG_LIGHT);
 
-        // 1. Top Header Banner (Preserved Deep Navy Theme)
+        // 1. Top Header Banner
         JPanel pnlHeader = createHeaderBanner();
         root.add(pnlHeader, BorderLayout.NORTH);
 
@@ -135,17 +128,17 @@ public class MainDashboard extends JFrame {
     private JPanel createHeaderBanner() {
         JPanel banner = new JPanel(new BorderLayout(15, 0));
         banner.setBackground(UITheme.PRIMARY_COLOR);
-        banner.setBorder(new EmptyBorder(12, 20, 12, 20));
+        banner.setBorder(new EmptyBorder(14, 22, 14, 22));
 
         // Left Branding
         JPanel pnlBrand = new JPanel(new GridLayout(2, 1, 0, 2));
         pnlBrand.setBackground(UITheme.PRIMARY_COLOR);
 
-        JLabel lblTitle = new JLabel("HOSPITAL MANAGEMENT SYSTEM");
-        lblTitle.setFont(UITheme.FONT_TITLE);
+        JLabel lblTitle = new JLabel("MEDITRACK");
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 22));
         lblTitle.setForeground(Color.WHITE);
 
-        JLabel lblSub = new JLabel("Object-Oriented Programming (Java) & Database Management Systems (DBMS)");
+        JLabel lblSub = new JLabel("Healthcare & Hospital Management Platform");
         lblSub.setFont(UITheme.FONT_SMALL);
         lblSub.setForeground(new Color(210, 230, 248));
 
@@ -161,7 +154,6 @@ public class MainDashboard extends JFrame {
         lblDbStatus.setFont(UITheme.FONT_BOLD);
         lblDbStatus.setForeground(Color.WHITE);
 
-        // Clean reliable text label with high contrast
         btnDbConfig = UITheme.createSecondaryButton("DB Settings");
         btnDbConfig.setToolTipText("Configure MySQL database host, port, credentials, and run schema");
         btnDbConfig.addActionListener(e -> {
@@ -213,7 +205,7 @@ public class MainDashboard extends JFrame {
         panel.add(pnlOfflineBanner);
         panel.add(Box.createVerticalStrut(12));
 
-        // 2. Four Redesigned Summary Metric Cards
+        // 2. Four Summary Metric Cards
         JPanel pnlMetrics = new JPanel(new GridLayout(1, 4, 12, 12));
         pnlMetrics.setBackground(UITheme.BG_LIGHT);
         pnlMetrics.setMaximumSize(new Dimension(Integer.MAX_VALUE, 105));
@@ -236,30 +228,18 @@ public class MainDashboard extends JFrame {
         panel.add(pnlMetrics);
         panel.add(Box.createVerticalStrut(16));
 
-        // 3. Center Section: Left Quick Actions (40%), Right Viva Concepts (60%)
-        JPanel pnlCenter = new JPanel(new GridBagLayout());
+        // 3. Center Section: Quick Actions + System Information Card
+        JPanel pnlCenter = new JPanel(new GridLayout(1, 2, 16, 16));
         pnlCenter.setBackground(UITheme.BG_LIGHT);
         pnlCenter.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weighty = 1.0;
-
-        // Left: Quick Navigation Actions
+        // Left Card: Quick Actions
         JPanel cardActions = createQuickActionsCard();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 0.38;
-        gbc.insets = new Insets(0, 0, 0, 12);
-        pnlCenter.add(cardActions, gbc);
+        pnlCenter.add(cardActions);
 
-        // Right: Academic Viva Concept Mapping
-        JPanel cardViva = createVivaConceptCard();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 0.62;
-        gbc.insets = new Insets(0, 0, 0, 0);
-        pnlCenter.add(cardViva, gbc);
+        // Right Card: System Overview & Status Summary
+        JPanel cardSystem = createSystemSummaryCard();
+        pnlCenter.add(cardSystem);
 
         panel.add(pnlCenter);
         return panel;
@@ -279,7 +259,7 @@ public class MainDashboard extends JFrame {
         topBar.setPreferredSize(new Dimension(0, 3));
         card.add(topBar, BorderLayout.NORTH);
 
-        // Center Content: Category, Value, Subtext
+        // Center Content
         JPanel center = new JPanel();
         center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
         center.setBackground(UITheme.CARD_BG);
@@ -327,7 +307,6 @@ public class MainDashboard extends JFrame {
         header.add(lblSubtitle);
         card.add(header, BorderLayout.NORTH);
 
-        // Vertical action buttons list with explicit contrast and full readability
         JPanel pnlButtons = new JPanel(new GridLayout(4, 1, 0, 10));
         pnlButtons.setBackground(Color.WHITE);
 
@@ -356,18 +335,18 @@ public class MainDashboard extends JFrame {
         return card;
     }
 
-    private JPanel createVivaConceptCard() {
+    private JPanel createSystemSummaryCard() {
         JPanel card = UITheme.createCardPanel();
-        card.setLayout(new BorderLayout(0, 8));
+        card.setLayout(new BorderLayout(0, 12));
 
         JPanel header = new JPanel(new GridLayout(2, 1, 0, 2));
         header.setBackground(Color.WHITE);
 
-        JLabel lblTitle = new JLabel("Academic Viva Concept Mapping");
+        JLabel lblTitle = new JLabel("System Modules & Operations");
         lblTitle.setFont(UITheme.FONT_SUBTITLE);
         lblTitle.setForeground(UITheme.PRIMARY_COLOR);
 
-        JLabel lblSubtitle = new JLabel("Quick reference mapping project components to syllabus concepts");
+        JLabel lblSubtitle = new JLabel("Operational overview of active management modules");
         lblSubtitle.setFont(UITheme.FONT_SMALL);
         lblSubtitle.setForeground(UITheme.TEXT_MUTED);
 
@@ -375,48 +354,49 @@ public class MainDashboard extends JFrame {
         header.add(lblSubtitle);
         card.add(header, BorderLayout.NORTH);
 
-        // Use JEditorPane with text/html for proper word-wrapping without horizontal scrolling
-        JEditorPane htmlPane = new JEditorPane();
-        htmlPane.setContentType("text/html");
-        htmlPane.setEditable(false);
-        htmlPane.setOpaque(false);
-        htmlPane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+        JPanel pnlModules = new JPanel(new GridLayout(4, 1, 0, 10));
+        pnlModules.setBackground(Color.WHITE);
 
-        String vivaHtml = "<html><body style='font-family: Segoe UI, sans-serif; font-size: 11px; color: #212529; margin: 0; padding: 2px;'>" +
-                "<div style='border: 1px solid #D6E4F0; background: #F8FBFE; padding: 8px; margin-bottom: 8px; border-radius: 4px;'>" +
-                "  <b style='color: #184C78; font-size: 12px;'>[ OOPS with Java ]</b>" +
-                "  <table style='font-size: 11px; margin-top: 4px; width: 100%; border-collapse: collapse;'>" +
-                "    <tr><td style='width: 32%; vertical-align: top;'><b>Classes &amp; Objects:</b></td><td>Patient, Doctor, Appointment, Bill entities encapsulate domain state.</td></tr>" +
-                "    <tr><td style='vertical-align: top;'><b>Inheritance:</b></td><td><code>Person</code> abstract base class extended by <code>Patient</code> and <code>Doctor</code>.</td></tr>" +
-                "    <tr><td style='vertical-align: top;'><b>Polymorphism:</b></td><td>Overridden <code>getDetails()</code> method provides entity-specific string output.</td></tr>" +
-                "    <tr><td style='vertical-align: top;'><b>Abstraction:</b></td><td>DAO interfaces (<code>PatientDao</code>, etc.) decouple callers from JDBC code.</td></tr>" +
-                "    <tr><td style='vertical-align: top;'><b>Exception Handling:</b></td><td>Custom <code>ValidationException</code> and safe <code>SQLException</code> handling.</td></tr>" +
-                "  </table>" +
-                "</div>" +
-                "<div style='border: 1px solid #D2E8DA; background: #F5FAF6; padding: 8px; border-radius: 4px;'>" +
-                "  <b style='color: #2E7D32; font-size: 12px;'>[ DBMS with MySQL ]</b>" +
-                "  <table style='font-size: 11px; margin-top: 4px; width: 100%; border-collapse: collapse;'>" +
-                "    <tr><td style='width: 32%; vertical-align: top;'><b>Relational Schema:</b></td><td>4 tables with PRIMARY KEY, AUTO_INCREMENT, and CASCADE rules.</td></tr>" +
-                "    <tr><td style='vertical-align: top;'><b>Foreign Keys:</b></td><td><code>Appointment</code> references Patient &amp; Doctor; <code>Bill</code> references Appointment.</td></tr>" +
-                "    <tr><td style='vertical-align: top;'><b>Data Integrity:</b></td><td><code>NOT NULL</code> and <code>CHECK</code> constraints (age &gt; 0, amounts &ge; 0).</td></tr>" +
-                "    <tr><td style='vertical-align: top;'><b>Parameterized SQL:</b></td><td>All queries use <code>PreparedStatement</code> to prevent SQL injection.</td></tr>" +
-                "    <tr><td style='vertical-align: top;'><b>SQL Joins:</b></td><td><code>INNER JOIN</code> queries merge Patient and Doctor data for display.</td></tr>" +
-                "  </table>" +
-                "</div>" +
-                "</body></html>";
+        pnlModules.add(createModuleItem("Patient Registration & Records", "Manage patient profiles, demographics, contact details, and update history.", new Color(30, 115, 185)));
+        pnlModules.add(createModuleItem("Doctor Staff Directory", "Directory of doctors, clinical specializations, contact numbers, and fees.", new Color(46, 125, 50)));
+        pnlModules.add(createModuleItem("Appointment Scheduling", "Book consultations, link patient & doctor records, and track visit status.", new Color(110, 60, 160)));
+        pnlModules.add(createModuleItem("Billing & Invoicing", "Auto-populate fees, track payment status (Paid/Unpaid), and generate receipts.", new Color(210, 105, 30)));
 
-        htmlPane.setText(vivaHtml);
-        htmlPane.setCaretPosition(0);
-
-        JScrollPane scrollPane = new JScrollPane(htmlPane);
-        scrollPane.setBorder(null);
-        scrollPane.setOpaque(false);
-        scrollPane.getViewport().setOpaque(false);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        card.add(scrollPane, BorderLayout.CENTER);
+        card.add(pnlModules, BorderLayout.CENTER);
         return card;
+    }
+
+    private JPanel createModuleItem(String title, String desc, Color dotColor) {
+        JPanel item = new JPanel(new BorderLayout(10, 0));
+        item.setBackground(new Color(248, 250, 252));
+        item.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(UITheme.BORDER_COLOR, 1),
+                new EmptyBorder(8, 12, 8, 12)
+        ));
+
+        JPanel pnlText = new JPanel(new GridLayout(2, 1, 0, 2));
+        pnlText.setBackground(new Color(248, 250, 252));
+
+        JLabel lblT = new JLabel(title);
+        lblT.setFont(UITheme.FONT_BOLD);
+        lblT.setForeground(UITheme.TEXT_MAIN);
+
+        JLabel lblD = new JLabel(desc);
+        lblD.setFont(UITheme.FONT_SMALL);
+        lblD.setForeground(UITheme.TEXT_MUTED);
+
+        pnlText.add(lblT);
+        pnlText.add(lblD);
+
+        // Colored status bar on the left
+        JPanel bar = new JPanel();
+        bar.setBackground(dotColor);
+        bar.setPreferredSize(new Dimension(4, 0));
+
+        item.add(bar, BorderLayout.WEST);
+        item.add(pnlText, BorderLayout.CENTER);
+
+        return item;
     }
 
     private JPanel createFooterBar() {
@@ -424,14 +404,14 @@ public class MainDashboard extends JFrame {
         footer.setBackground(Color.WHITE);
         footer.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(1, 0, 0, 0, UITheme.BORDER_COLOR),
-                new EmptyBorder(6, 16, 6, 16)
+                new EmptyBorder(7, 20, 7, 20)
         ));
 
-        JLabel lblLeft = new JLabel("Hospital Management System v1.0 | Ready");
+        JLabel lblLeft = new JLabel("MediTrack v1.0 | Ready");
         lblLeft.setFont(UITheme.FONT_SMALL);
         lblLeft.setForeground(UITheme.TEXT_MUTED);
 
-        JLabel lblRight = new JLabel("Frontend: Moksha  |  Database: Poojitha");
+        JLabel lblRight = new JLabel("Author: Moksha");
         lblRight.setFont(UITheme.FONT_SMALL);
         lblRight.setForeground(UITheme.TEXT_MUTED);
 
@@ -444,13 +424,13 @@ public class MainDashboard extends JFrame {
         boolean connected = DatabaseConnection.testConnection();
         if (connected) {
             lblDbStatus.setText("● MySQL: Connected (" + DatabaseConnection.getDatabase() + ")");
-            lblDbStatus.setForeground(new Color(175, 235, 175)); // Crisp soft green on navy
+            lblDbStatus.setForeground(new Color(175, 235, 175));
             if (pnlOfflineBanner != null) {
                 pnlOfflineBanner.setVisible(false);
             }
         } else {
             lblDbStatus.setText("● MySQL: Offline");
-            lblDbStatus.setForeground(new Color(255, 170, 170)); // Clear red/coral indicator on navy
+            lblDbStatus.setForeground(new Color(255, 170, 170));
             if (pnlOfflineBanner != null) {
                 pnlOfflineBanner.setVisible(true);
             }
