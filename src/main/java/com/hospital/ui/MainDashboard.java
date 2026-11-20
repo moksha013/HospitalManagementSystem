@@ -411,12 +411,7 @@ public class MainDashboard extends JFrame {
         lblLeft.setFont(UITheme.FONT_SMALL);
         lblLeft.setForeground(UITheme.TEXT_MUTED);
 
-        JLabel lblRight = new JLabel("Author: Moksha");
-        lblRight.setFont(UITheme.FONT_SMALL);
-        lblRight.setForeground(UITheme.TEXT_MUTED);
-
         footer.add(lblLeft, BorderLayout.WEST);
-        footer.add(lblRight, BorderLayout.EAST);
         return footer;
     }
 
